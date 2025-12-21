@@ -11,7 +11,15 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors());
+// app.use(cors());
+
+app.use(cors({
+  origin: "https://employee-leave-system-frontend.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"],
+}));
+
+
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
@@ -22,6 +30,6 @@ app.get("/", (req, res) => {
   res.send("Backend working 👍");
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server running on port ${process.env.PORT || 5000}`);
 });
