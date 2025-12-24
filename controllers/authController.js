@@ -55,3 +55,35 @@ exports.resetAllLeaves = async (req, res) => {
     res.json({ error: error.message });
   }
 };
+
+
+// / CHANGE USER ROLE
+exports.changeUserRole = async (req, res) => {
+  try {
+    const { role } = req.body;
+
+    // ✅ validate role
+    if (!["employee", "manager", "superadmin"].includes(role)) {
+      return res.status(400).json({ message: "Invalid role" });
+    }
+
+    // ✅ update role
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { role },
+      { new: true } // IMPORTANT
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({
+      message: "Role updated successfully",
+      user: updatedUser
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

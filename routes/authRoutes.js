@@ -1,5 +1,6 @@
 const express = require("express");
 const {
+  changeUserRole,
   registerUser,
   loginUser,
   getAllUsers,
@@ -24,5 +25,6 @@ router.get("/user/:id", async (req, res) => {
 router.get("/all-users", getAllUsers);
 router.post("/create-user", createUserByAdmin);
 router.put("/reset-leaves", resetAllLeaves);
+router.put("/change-role/:id", changeUserRole); 
 
 module.exports = router;
